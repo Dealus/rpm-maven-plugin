@@ -109,10 +109,10 @@
   </contributors>
 
   <scm>
-    <connection>scm:git:https://github.com/mojohaus/rpm-maven-plugin.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/mojohaus/rpm-maven-plugin.git</developerConnection>
-    <url>https://github.com/mojohaus/rpm-maven-plugin</url>
-    <tag>epoch</tag>
+    <connection>scm:git:https://github.com/dealus/rpm-maven-plugin.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/dealus/rpm-maven-plugin.git</developerConnection>
+    <url>https://github.com/dealus/rpm-maven-plugin</url>
+    <tag>rpm-maven-plugin-2.2.0-CHR</tag>
   </scm>
 
   <properties>
@@ -184,6 +184,11 @@
 
     <plugins>
       <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>maven-gpg-plugin</artifactId>
+    <version>1.6</version>
+</plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
         <configuration>
@@ -239,5 +244,40 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>mojo-release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <configuration>
+                <skip>true</skip>
+            </configuration>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
+  <distributionManagement>
+    <repository>
+      <id>deployment</id>
+      <name>chronopost internal</name>
+      <url>http://lyn4e101.tlt:57951/nexus/content/repositories/releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>deployment</id>
+      <name>chronopost internal snapshots</name>
+      <url>http://lyn4e101.tlt:57951/nexus/content/repositories/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
 </project>
